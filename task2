@@ -1,0 +1,18 @@
+#!/bin/bash 
+GRPS=`find . -maxdepth 1 -type f -iname '*.log' | awk -F. '{print substr($2,2);}'`
+# echo "$GRPS"
+
+for group in ${GRPS}; do
+    count=`ls ${group}* | wc -l`;
+    if ((${count} <= 21)); then
+        for((i=count; i>1; i--)); do
+            j=$((i-1));
+            # echo ${i};
+            # echo ${j};
+            mv ${group}.log.${j} ${group}.log.${i}
+        done
+        mv ${group}.log ${group}.log.1
+        touch ${group}.log
+    fi
+done
+
