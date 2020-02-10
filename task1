@@ -1,0 +1,49 @@
+#!/bin/bash
+
+IMGS=`find . -maxdepth 1 -type f \( -name "*.jpg" -o -name "*.png" \)`
+IMGDIR=`find . -type d -name images`
+
+MUSIC=`find . -maxdepth 1 -type f \( -name "*.mp3" -o -name "*.flac" \)`
+MUSICDIR=`find . -type d -name music`
+
+VID=`find . -maxdepth 1 -type f \( -name "*.mov" -o -name "*.avi" \)`
+VIDDIR=`find . -type d -name videos`
+
+# Move *.jpg & *.png to images directory
+if test ! -z "$IMGS"; then
+    
+    if test -z "$IMGDIR"; then
+        mkdir -p images
+    fi
+
+    for i in "$IMGS"; do 
+        mv $i images/ 
+    done
+fi
+
+# Move *.mp3 & *.flac to music directory
+if test ! -z "$MUSIC"; then
+    
+    if test -z "$MUSICDIR"; then
+        mkdir -p music
+    fi
+
+    for i in "$MUSIC"; do 
+        mv $i music/ 
+    done
+fi
+
+# Move *.avi & *.mov to videos directory
+if test ! -z "$VID"; then
+    
+    if test -z "$VIDDIR"; then
+        mkdir -p videos
+    fi
+
+    for i in "$VID"; do 
+        mv $i videos/ 
+    done
+fi
+
+# Remove all logs files
+find . -iname '*.log' -exec rm {} \;
